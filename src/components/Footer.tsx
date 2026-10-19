@@ -175,11 +175,6 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/offers" className="hover:text-white transition-colors">
-                  Special Promotions & EMI
-                </Link>
-              </li>
-              <li>
                 <Link href="/admin" className="hover:text-white transition-colors text-zinc-300 font-semibold">
                   Admin Database Portal
                 </Link>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { X, Trash2, Plus, Minus, ShoppingBag, ArrowRight, ShieldCheck, Tag, CheckCircle2 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
@@ -12,6 +12,12 @@ export function CartDrawer() {
   const [appliedDiscount, setAppliedDiscount] = useState<{ code: string; percent?: number; amount?: number } | null>(null);
   const [couponError, setCouponError] = useState('');
   const [orderCompleteData, setOrderCompleteData] = useState<{ orderId: string; total: number } | null>(null);
+
+  useEffect(() => {
+    const handleOpenCart = () => setIsCartOpen(true);
+    window.addEventListener('open-cart', handleOpenCart);
+    return () => window.removeEventListener('open-cart', handleOpenCart);
+  }, [setIsCartOpen]);
 
   const shippingCost = subtotal > 499 || subtotal === 0 ? 0 : 99;
   const freeShippingThreshold = 499;

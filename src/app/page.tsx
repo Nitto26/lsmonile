@@ -10,10 +10,6 @@ import {
   Cable,
   Cpu,
   Wrench,
-  ShieldCheck,
-  Truck,
-  RotateCcw,
-  Headset,
   ArrowRight,
 } from 'lucide-react';
 import { getAllProducts } from '@/lib/db';
@@ -46,52 +42,7 @@ export default async function HomePage() {
 
       {/* Main Content Area */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
-        {/* 2. Trust Bar (4 USPs) with Monochromatic Glassmorphism */}
-        <section className="bg-zinc-900/60 backdrop-blur-md rounded-2xl border border-zinc-800 p-6 shadow-xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 divide-y md:divide-y-0 md:divide-x divide-zinc-800">
-            <div className="flex items-center gap-3.5 pt-3 md:pt-0">
-              <div className="w-11 h-11 rounded-2xl bg-zinc-800 text-white border border-zinc-700 flex items-center justify-center flex-shrink-0">
-                <ShieldCheck className="w-6 h-6" />
-              </div>
-              <div>
-                <h4 className="text-sm font-bold text-white">100% Genuine Products</h4>
-                <p className="text-xs text-zinc-400">Certified authentic devices</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3.5 pt-3 md:pt-0 md:pl-6">
-              <div className="w-11 h-11 rounded-2xl bg-zinc-800 text-white border border-zinc-700 flex items-center justify-center flex-shrink-0">
-                <Truck className="w-6 h-6" />
-              </div>
-              <div>
-                <h4 className="text-sm font-bold text-white">Free Delivery</h4>
-                <p className="text-xs text-zinc-400">Orders above ₹499</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3.5 pt-3 md:pt-0 md:pl-6">
-              <div className="w-11 h-11 rounded-2xl bg-zinc-800 text-white border border-zinc-700 flex items-center justify-center flex-shrink-0">
-                <RotateCcw className="w-6 h-6" />
-              </div>
-              <div>
-                <h4 className="text-sm font-bold text-white">Easy Returns</h4>
-                <p className="text-xs text-zinc-400">7-day replacement policy</p>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-3.5 pt-3 md:pt-0 md:pl-6">
-              <div className="w-11 h-11 rounded-2xl bg-zinc-800 text-white border border-zinc-700 flex items-center justify-center flex-shrink-0">
-                <Headset className="w-6 h-6" />
-              </div>
-              <div>
-                <h4 className="text-sm font-bold text-white">Expert Support</h4>
-                <p className="text-xs text-zinc-400">Always here for you</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* 3. Shop by Category */}
+        {/* 2. Shop by Category */}
         <section className="space-y-4">
           <div className="flex items-center justify-between">
             <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight">
@@ -187,28 +138,6 @@ export default async function HomePage() {
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
-        </section>
-
-        {/* 5. Bottom Limited Time Offer Banner */}
-        <section className="bg-gradient-to-r from-zinc-900 via-zinc-900/90 to-zinc-950 text-white rounded-3xl p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6 relative overflow-hidden border border-zinc-800 shadow-2xl">
-          <div className="space-y-1 text-center sm:text-left">
-            <span className="text-[11px] font-black tracking-widest uppercase text-zinc-400">
-              LIMITED TIME OFFER
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-black tracking-tight text-white">
-              Big Deals, Bigger Savings.
-            </h3>
-            <p className="text-xs sm:text-sm text-zinc-400">
-              Get instant bank discounts up to ₹5,000 and 0% No Cost EMI on flagship devices.
-            </p>
-          </div>
-
-          <Link
-            href="/offers"
-            className="px-6 py-3 bg-white hover:bg-zinc-200 text-zinc-950 font-black text-sm rounded-xl transition-all shadow-lg shadow-black/50 flex items-center gap-2 flex-shrink-0"
-          >
-            Explore Offers <ArrowRight className="w-4 h-4" />
-          </Link>
         </section>
       </div>
     </div>

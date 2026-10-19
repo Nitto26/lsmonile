@@ -22,7 +22,7 @@ import GlassSurface from './GlassSurface';
 export function Header() {
   const pathname = usePathname();
   const router = useRouter();
-  const { totalItems, wishlist } = useCart();
+  const { totalItems, wishlist, setIsCartOpen } = useCart();
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -49,7 +49,6 @@ export function Header() {
     { name: 'Home', href: '/' },
     { name: 'Shop', href: '/shop' },
     { name: 'Repair', href: '/repair' },
-    { name: 'Offers', href: '/offers' },
     { name: 'About Us', href: '/about' },
     { name: 'Contact', href: '/contact' },
     { name: 'Admin', href: '/admin' },
@@ -270,10 +269,7 @@ export function Header() {
                 {/* Shopping Cart Button */}
                 <button
                   type="button"
-                  onClick={() => {
-                    const event = new CustomEvent('open-cart');
-                    window.dispatchEvent(event);
-                  }}
+                  onClick={() => setIsCartOpen(true)}
                   className="relative p-2.5 text-zinc-300 hover:text-white bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700/80 backdrop-blur-md rounded-full shadow-2xs hover:shadow-xs transition-all cursor-pointer"
                   title="Shopping Cart"
                   aria-label="View Shopping Cart"
