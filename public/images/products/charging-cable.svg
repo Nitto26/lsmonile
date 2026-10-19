@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" fill="none">
+    
+  <path d="M80 320 C80 180, 320 320, 320 180 C320 80, 200 80, 200 150" fill="none" stroke="#2563EB" stroke-width="12" stroke-linecap="round" />
+  <path d="M80 320 C80 180, 320 320, 320 180 C320 80, 200 80, 200 150" fill="none" stroke="#93C5FD" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 10" />
+  <!-- Metal Connector Left -->
+  <rect x="65" y="310" width="30" height="45" rx="6" fill="#1E293B" stroke="#60A5FA" stroke-width="2" />
+  <rect x="73" y="355" width="14" height="20" rx="3" fill="#94A3B8" />
+  <!-- Metal Connector Right -->
+  <rect x="185" y="130" width="30" height="45" rx="6" fill="#1E293B" stroke="#60A5FA" stroke-width="2" transform="rotate(-30 200 150)" />
+
+  </svg>

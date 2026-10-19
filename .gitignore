@@ -1,0 +1,94 @@
+# Dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Next.js build and outputs
+/.next/
+/out/
+/build
+/dist
+.turbo
+
+# SQLite Database & Runtime Lock/WAL files
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+*.sqlite-journal
+*.sqlite-shm
+*.sqlite-wal
+data/*.db
+data/*.db-shm
+data/*.db-wal
+!data/.gitkeep
+
+# Environment variables and credentials
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+!.env.example
+*.pem
+
+# Testing and coverage
+/coverage
+.nyc_output
+
+# Debug and runtime logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.log
+
+# Vercel deployment metadata
+.vercel
+
+# TypeScript build info & auto-generated definitions
+*.tsbuildinfo
+next-env.d.ts
+AGENTS.md
+
+# IDEs and Editor files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*~
+.cursor/
+.fleet/
+*.sublime-project
+*.sublime-workspace
+
+# Operating System files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Thumbs.db:encryptable
+desktop.ini
+
+# Temporary and cache files
+*.tmp
+*.temp
+.cache/
+.tempmediaStorage/

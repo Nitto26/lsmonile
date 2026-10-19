@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" fill="none">
+    
+  <defs>
+    <linearGradient id="caseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC" />
+      <stop offset="100%" stop-color="#E2E8F0" />
+    </linearGradient>
+  </defs>
+  <!-- Charging Case -->
+  <rect x="120" y="110" width="160" height="180" rx="55" fill="url(#caseGrad)" stroke="#CBD5E1" stroke-width="3" />
+  <line x1="120" y1="180" x2="280" y2="180" stroke="#94A3B8" stroke-width="2" />
+  <circle cx="200" cy="210" r="5" fill="#3B82F6" />
+  <!-- Earbuds silhouettes -->
+  <path d="M160 80 Q160 110 160 140" stroke="#0F172A" stroke-width="12" stroke-linecap="round" />
+  <circle cx="160" cy="75" r="14" fill="#0F172A" />
+  <path d="M240 80 Q240 110 240 140" stroke="#0F172A" stroke-width="12" stroke-linecap="round" />
+  <circle cx="240" cy="75" r="14" fill="#0F172A" />
+
+  </svg>

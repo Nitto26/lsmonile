@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400" fill="none">
+    
+  <defs>
+    <filter id="headphoneShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#000000" flood-opacity="0.15" />
+    </filter>
+  </defs>
+  <!-- Headband arch -->
+  <path d="M100 220 C100 110, 300 110, 300 220" fill="none" stroke="#0F172A" stroke-width="24" stroke-linecap="round" filter="url(#headphoneShadow)" />
+  <!-- Left Ear Cup -->
+  <rect x="80" y="195" width="46" height="85" rx="23" fill="#1E293B" stroke="#334155" stroke-width="3" />
+  <rect x="94" y="210" width="18" height="55" rx="9" fill="#0F172A" />
+  <!-- Right Ear Cup -->
+  <rect x="274" y="195" width="46" height="85" rx="23" fill="#1E293B" stroke="#334155" stroke-width="3" />
+  <rect x="288" y="210" width="18" height="55" rx="9" fill="#0F172A" />
+  <!-- Accent highlight -->
+  <path d="M140 125 C175 110, 225 110, 260 125" fill="none" stroke="#38BDF8" stroke-width="3" opacity="0.6" />
+
+  </svg>
