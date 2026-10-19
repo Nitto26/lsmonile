@@ -158,6 +158,62 @@
     0 0 0 2px rgba(255, 255, 255, 0.9);
 }
 
+/* ==========================================================================
+   1. Original Monochromatic Dark Theme for DriftWall (Active in html.dark)
+   ========================================================================== */
+html.dark .drift-wall__inner {
+  background: #121215 !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.7) !important;
+}
+
+html.dark .drift-wall__tile.is-active .drift-wall__inner,
+html.dark .drift-wall__tile:hover .drift-wall__inner,
+html.dark .drift-wall__tile:focus-visible .drift-wall__inner {
+  box-shadow: 0 24px 60px -18px rgba(0, 0, 0, 0.9), 0 0 20px rgba(255, 255, 255, 0.15) !important;
+  border-color: rgba(255, 255, 255, 0.6) !important;
+}
+
+html.dark .drift-wall__badge {
+  background: rgba(18, 18, 21, 0.92) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  color: #ffffff !important;
+}
+
+html.dark .drift-wall__overlay {
+  background: #09090b !important;
+  opacity: 0.18 !important;
+}
+
+/* ==========================================================================
+   2. Light / White Theme Overrides for DriftWall (Active in html.light)
+   ========================================================================== */
+html.light .drift-wall__inner {
+  background: #ffffff !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.07), 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+}
+
+html.light .drift-wall__tile.is-active .drift-wall__inner,
+html.light .drift-wall__tile:hover .drift-wall__inner,
+html.light .drift-wall__tile:focus-visible .drift-wall__inner {
+  box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.12) !important;
+  border-color: rgba(0, 0, 0, 0.18) !important;
+}
+
+html.light .drift-wall__badge {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border: 1px solid rgba(0, 0, 0, 0.1) !important;
+  color: #09090b !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+  font-weight: 700 !important;
+}
+
+html.light .drift-wall__overlay {
+  background: #ffffff !important;
+  opacity: 0.04 !important;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .drift-wall__plane,
   .drift-wall__track {
