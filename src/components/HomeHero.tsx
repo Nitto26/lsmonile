@@ -99,6 +99,21 @@ const HERO_WALL_ITEMS = [
 ];
 
 export function HomeHero() {
+  const [isDark, setIsDark] = React.useState(true);
+
+  React.useEffect(() => {
+    const updateTheme = () => {
+      setIsDark(document.documentElement.classList.contains('dark'));
+    };
+    updateTheme();
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div
       className="w-full relative overflow-hidden bg-[#09090b]"
@@ -108,7 +123,7 @@ export function HomeHero() {
         position: 'relative'
       }}
     >
-      {/* Background DriftWall Layer with alternating scrolling columns (down & up vice versa) */}
+      {/* Background DriftWall Layer with alternating scrolling columns */}
       <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-auto">
         <DriftWall
           items={HERO_WALL_ITEMS}
@@ -129,15 +144,19 @@ export function HomeHero() {
           pauseOnHover={true}
           lift={44}
           fade={0.25}
-          dim={0.82}
-          overlayColor="#09090b"
+          dim={isDark ? 0.82 : 0.72}
+          overlayColor={isDark ? "#09090b" : "#f8fafc"}
           className="w-full h-full"
         />
       </div>
 
-      {/* Atmospheric monochromatic gradients for text legibility while revealing the scrolling columns */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#09090b]/95 via-[#09090b]/75 to-[#09090b]/30 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-[#09090b]/40 pointer-events-none" />
+      {/* Atmospheric gradients for text legibility in Dark mode */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#09090b]/95 via-[#09090b]/75 to-[#09090b]/30 pointer-events-none hidden dark:block" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#09090b] via-transparent to-[#09090b]/40 pointer-events-none hidden dark:block" />
+
+      {/* Atmospheric gradients for text legibility in Light mode */}
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-50/98 via-slate-50/85 to-slate-50/30 pointer-events-none block dark:hidden" />
+      <div className="absolute inset-0 bg-gradient-to-t from-slate-50 via-transparent to-slate-50/40 pointer-events-none block dark:hidden" />
 
       {/* Hero Content Overlay centered within max-w-7xl */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 flex items-center min-h-[calc(100vh-72px)] pointer-events-none">

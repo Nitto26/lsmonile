@@ -18,6 +18,7 @@ import {
 import { useCart } from '@/context/CartContext';
 import { Product } from '@/types';
 import GlassSurface from './GlassSurface';
+import { AnimatedThemeToggler } from '@/components/ui/animated-theme-toggler';
 
 export function Header() {
   const pathname = usePathname();
@@ -30,8 +31,22 @@ export function Header() {
   const [mounted, setMounted] = useState(false);
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
   const [liveServices, setLiveServices] = useState<any[]>([]);
+  const [isDark, setIsDark] = useState(true);
 
   const searchRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateTheme = () => {
+      setIsDark(document.documentElement.classList.contains('dark'));
+    };
+    updateTheme();
+    const observer = new MutationObserver(updateTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     setMounted(true);
@@ -100,7 +115,7 @@ export function Header() {
           saturation={1.1}
           style={{
             overflow: 'visible',
-            backgroundColor: 'rgba(9, 9, 11, 0.85)',
+            backgroundColor: isDark ? 'rgba(9, 9, 11, 0.85)' : 'rgba(255, 255, 255, 0.88)',
             borderBottom: 'none',
             boxShadow: 'none',
           }}
@@ -254,6 +269,15 @@ export function Header() {
 
               {/* Right Action Icons matching Monochromatic Theme */}
               <div className="flex items-center gap-1.5 sm:gap-2">
+                {/* Theme Toggler with View Transition Animation */}
+                <AnimatedThemeToggler
+                  className="relative p-2.5 text-zinc-300 hover:text-white bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700/80 backdrop-blur-md rounded-full shadow-2xs hover:shadow-xs transition-all cursor-pointer flex items-center justify-center"
+                  variant="circle"
+                  duration={450}
+                  title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                  aria-label="Toggle light or dark theme"
+                />
+
                 {/* Wishlist Link */}
                 <Link
                   href="/shop?filter=wishlist"

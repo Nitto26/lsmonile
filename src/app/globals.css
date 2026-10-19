@@ -1,21 +1,17 @@
 @import "tailwindcss";
 
-@layer base {
-  :root {
-    --primary: #ffffff;
-    --primary-hover: #e4e4e7;
-    --primary-light: #27272a;
-    --primary-dark: #d4d4d8;
-    --accent: #a1a1aa;
-    --surface: #121215;
-    --surface-muted: #18181b;
-    --surface-card: #18181b;
-    --border: #27272a;
-    --text-primary: #FFFFFF;
-    --text-secondary: #a1a1aa;
-    --text-muted: #71717a;
-  }
+/* Magic UI AnimatedThemeToggler View Transitions styles */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
 
+html[data-magicui-theme-vt="active"]::view-transition-group(root) {
+  animation-duration: var(--magicui-theme-toggle-vt-duration);
+}
+
+@layer base {
   * {
     box-sizing: border-box;
     -webkit-font-smoothing: antialiased;
@@ -24,10 +20,482 @@
 
   body {
     background-color: #09090b;
-    color: #F4F4F5;
+    color: #f4f4f5;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     overflow-x: hidden;
   }
+}
+
+/* ==========================================================================
+   1. ORIGINAL MONOCHROMATIC DARK THEME (Active when html.dark)
+   ========================================================================== */
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #09090b !important;
+  color: #f4f4f5 !important;
+}
+
+html.dark header .glass-surface {
+  background-color: rgba(9, 9, 11, 0.85) !important;
+  box-shadow: none !important;
+  border-bottom: none !important;
+}
+
+html.dark header .text-white {
+  color: #ffffff !important;
+}
+
+html.dark header .text-zinc-300 {
+  color: #d4d4d8 !important;
+}
+
+html.dark header .text-zinc-400 {
+  color: #a1a1aa !important;
+}
+
+html.dark header .bg-zinc-900\/80 {
+  background-color: rgba(24, 24, 27, 0.8) !important;
+  border-color: rgba(63, 63, 70, 0.8) !important;
+  color: #d4d4d8 !important;
+}
+
+html.dark header .bg-zinc-900\/80:hover {
+  background-color: #27272a !important;
+  color: #ffffff !important;
+}
+
+html.dark header input {
+  background-color: rgba(24, 24, 27, 0.8) !important;
+  border-color: #3f3f46 !important;
+  color: #ffffff !important;
+}
+
+html.dark .hero-section,
+html.dark .bg-\[\#09090b\] {
+  background-color: #09090b !important;
+}
+
+html.dark .hero-dark-overlay {
+  display: block !important;
+}
+
+html.dark .hero-light-overlay {
+  display: none !important;
+}
+
+html.dark a.bg-white,
+html.dark button.bg-white {
+  background-color: #ffffff !important;
+  color: #09090b !important;
+}
+
+html.dark a.bg-zinc-900\/80,
+html.dark button.bg-zinc-900\/80 {
+  background-color: rgba(24, 24, 27, 0.8) !important;
+  color: #ffffff !important;
+  border-color: #3f3f46 !important;
+}
+
+/* ==========================================================================
+   2. CLEAN WHITE / LIGHT THEME (Active when html.light or html:not(.dark))
+   ========================================================================== */
+html.light,
+html:not(.dark) {
+  color-scheme: light;
+}
+
+html.light body,
+html:not(.dark) body {
+  background-color: #f8fafc !important;
+  color: #09090b !important;
+}
+
+/* Header & Nav in Light Mode */
+html.light header .glass-surface,
+html:not(.dark) header .glass-surface {
+  background-color: rgba(255, 255, 255, 0.9) !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05) !important;
+  border-bottom: none !important;
+}
+
+html.light header .text-white,
+html:not(.dark) header .text-white {
+  color: #09090b !important;
+}
+
+html.light header .text-zinc-300,
+html:not(.dark) header .text-zinc-300 {
+  color: #1e293b !important;
+}
+
+html.light header .text-zinc-400,
+html:not(.dark) header .text-zinc-400 {
+  color: #64748b !important;
+}
+
+html.light header nav a,
+html:not(.dark) header nav a {
+  color: #475569 !important;
+}
+
+html.light header nav a:hover,
+html:not(.dark) header nav a:hover {
+  color: #09090b !important;
+  background-color: #f1f5f9 !important;
+}
+
+html.light header nav a.bg-zinc-800\/90,
+html:not(.dark) header nav a.bg-zinc-800\/90 {
+  background-color: #f1f5f9 !important;
+  color: #09090b !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light header nav a.bg-zinc-800\/90 span,
+html:not(.dark) header nav a.bg-zinc-800\/90 span {
+  background-color: #09090b !important;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+html.light header input,
+html:not(.dark) header input {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #09090b !important;
+}
+
+html.light header input::placeholder,
+html:not(.dark) header input::placeholder {
+  color: #94a3b8 !important;
+}
+
+html.light header .bg-zinc-900\/80,
+html:not(.dark) header .bg-zinc-900\/80 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #09090b !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light header .bg-zinc-900\/80:hover,
+html:not(.dark) header .bg-zinc-900\/80:hover {
+  background-color: #f1f5f9 !important;
+  color: #000000 !important;
+}
+
+html.light header button svg,
+html:not(.dark) header button svg,
+html.light header a svg,
+html:not(.dark) header a svg {
+  color: #09090b !important;
+}
+
+html.light header .bg-zinc-900\/95,
+html:not(.dark) header .bg-zinc-900\/95 {
+  background-color: rgba(255, 255, 255, 0.98) !important;
+  border-color: #e2e8f0 !important;
+  color: #09090b !important;
+}
+
+/* Backgrounds & Cards in Light Mode */
+html.light .bg-\[\#09090b\],
+html:not(.dark) .bg-\[\#09090b\] {
+  background-color: #f8fafc !important;
+}
+
+html.light .bg-zinc-950,
+html:not(.dark) .bg-zinc-950 {
+  background-color: #f8fafc !important;
+}
+
+html.light .bg-zinc-900,
+html:not(.dark) .bg-zinc-900,
+html.light .bg-zinc-900\/60,
+html:not(.dark) .bg-zinc-900\/60,
+html.light .bg-zinc-900\/70,
+html:not(.dark) .bg-zinc-900\/70,
+html.light .bg-zinc-900\/80,
+html:not(.dark) .bg-zinc-900\/80,
+html.light .bg-zinc-900\/90,
+html:not(.dark) .bg-zinc-900\/90,
+html.light .bg-zinc-900\/95,
+html:not(.dark) .bg-zinc-900\/95 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light .bg-zinc-800,
+html:not(.dark) .bg-zinc-800 {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light .border-zinc-800,
+html:not(.dark) .border-zinc-800,
+html.light .border-zinc-700,
+html:not(.dark) .border-zinc-700,
+html.light .border-zinc-700\/80,
+html:not(.dark) .border-zinc-700\/80,
+html.light .border-zinc-800\/80,
+html:not(.dark) .border-zinc-800\/80,
+html.light .border-zinc-900,
+html:not(.dark) .border-zinc-900 {
+  border-color: #e2e8f0 !important;
+}
+
+html.light .divide-zinc-800 > :not([hidden]) ~ :not([hidden]),
+html:not(.dark) .divide-zinc-800 > :not([hidden]) ~ :not([hidden]),
+html.light .divide-zinc-700 > :not([hidden]) ~ :not([hidden]),
+html:not(.dark) .divide-zinc-700 > :not([hidden]) ~ :not([hidden]) {
+  border-color: #e2e8f0 !important;
+}
+
+/* Headings & Text in Light Mode */
+html.light h1.text-white,
+html:not(.dark) h1.text-white,
+html.light h2.text-white,
+html:not(.dark) h2.text-white,
+html.light h3.text-white,
+html:not(.dark) h3.text-white,
+html.light h4.text-white,
+html:not(.dark) h4.text-white,
+html.light h5.text-white,
+html:not(.dark) h5.text-white,
+html.light .text-white:not(button.bg-white, button.bg-white *, a.bg-white, a.bg-white *),
+html:not(.dark) .text-white:not(button.bg-white, button.bg-white *, a.bg-white, a.bg-white *) {
+  color: #09090b !important;
+}
+
+html.light .text-zinc-300,
+html:not(.dark) .text-zinc-300,
+html.light .text-zinc-200,
+html:not(.dark) .text-zinc-200,
+html.light .text-zinc-100,
+html:not(.dark) .text-zinc-100 {
+  color: #334155 !important;
+}
+
+html.light .text-zinc-400,
+html:not(.dark) .text-zinc-400 {
+  color: #64748b !important;
+}
+
+html.light .text-zinc-500,
+html:not(.dark) .text-zinc-500 {
+  color: #64748b !important;
+}
+
+/* Hero Section in Light Mode */
+html.light h1 span.bg-gradient-to-r,
+html:not(.dark) h1 span.bg-gradient-to-r {
+  background-image: linear-gradient(to right, #09090b, #334155, #64748b) !important;
+  -webkit-background-clip: text !important;
+  color: transparent !important;
+}
+
+/* Primary CTA in Light Mode (Apple-like Jet Black CTA Button) */
+html.light a.bg-white,
+html:not(.dark) a.bg-white,
+html.light button.bg-white:not([title*="wishlist"], [title*="Wishlist"]),
+html:not(.dark) button.bg-white:not([title*="wishlist"], [title*="Wishlist"]) {
+  background-color: #09090b !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15) !important;
+}
+
+html.light a.bg-white:hover,
+html:not(.dark) a.bg-white:hover,
+html.light button.bg-white:hover:not([title*="wishlist"], [title*="Wishlist"]),
+html:not(.dark) button.bg-white:hover:not([title*="wishlist"], [title*="Wishlist"]) {
+  background-color: #1e293b !important;
+}
+
+html.light a.bg-white *,
+html:not(.dark) a.bg-white *,
+html.light button.bg-white:not([title*="wishlist"], [title*="Wishlist"]) *,
+html:not(.dark) button.bg-white:not([title*="wishlist"], [title*="Wishlist"]) * {
+  color: #ffffff !important;
+}
+
+/* Secondary Button in Light Mode */
+html.light a.bg-zinc-900\/80,
+html:not(.dark) a.bg-zinc-900\/80,
+html.light button.bg-zinc-900\/80,
+html:not(.dark) button.bg-zinc-900\/80 {
+  background-color: #ffffff !important;
+  color: #09090b !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light a.bg-zinc-900\/80:hover,
+html:not(.dark) a.bg-zinc-900\/80:hover,
+html.light button.bg-zinc-900\/80:hover,
+html:not(.dark) button.bg-zinc-900\/80:hover {
+  background-color: #f8fafc !important;
+  border-color: #94a3b8 !important;
+}
+
+html.light a.bg-zinc-900\/80 *,
+html:not(.dark) a.bg-zinc-900\/80 *,
+html.light button.bg-zinc-900\/80 *,
+html:not(.dark) button.bg-zinc-900\/80 * {
+  color: #09090b !important;
+}
+
+/* Category Cards in Light Mode */
+html.light a.group[href*="/shop?category="],
+html:not(.dark) a.group[href*="/shop?category="] {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03) !important;
+}
+
+html.light a.group[href*="/shop?category="]:hover,
+html:not(.dark) a.group[href*="/shop?category="]:hover {
+  background-color: #ffffff !important;
+  border-color: #94a3b8 !important;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06) !important;
+}
+
+html.light a.group[href*="/shop?category="] .w-12,
+html:not(.dark) a.group[href*="/shop?category="] .w-12 {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+html.light a.group[href*="/shop?category="]:hover .w-12,
+html:not(.dark) a.group[href*="/shop?category="]:hover .w-12 {
+  background-color: #09090b !important;
+  color: #ffffff !important;
+}
+
+html.light a.group[href*="/shop?category="] span,
+html:not(.dark) a.group[href*="/shop?category="] span {
+  color: #1e293b !important;
+}
+
+/* Product Cards in Light Mode */
+html.light div.group.relative.bg-zinc-900\/60,
+html:not(.dark) div.group.relative.bg-zinc-900\/60 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 16px -2px rgba(0, 0, 0, 0.04) !important;
+}
+
+html.light div.group.relative.bg-zinc-900\/60:hover,
+html:not(.dark) div.group.relative.bg-zinc-900\/60:hover {
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.09) !important;
+}
+
+html.light div.group.relative.bg-zinc-900\/60 h3,
+html:not(.dark) div.group.relative.bg-zinc-900\/60 h3,
+html.light div.group.relative.bg-zinc-900\/60 .text-white,
+html:not(.dark) div.group.relative.bg-zinc-900\/60 .text-white {
+  color: #09090b !important;
+}
+
+html.light div.group.relative.bg-zinc-900\/60 .text-zinc-400,
+html:not(.dark) div.group.relative.bg-zinc-900\/60 .text-zinc-400 {
+  color: #64748b !important;
+}
+
+html.light div.group.relative.bg-zinc-900\/60 .text-zinc-300,
+html:not(.dark) div.group.relative.bg-zinc-900\/60 .text-zinc-300 {
+  color: #334155 !important;
+}
+
+html.light div.group.relative.bg-zinc-900\/60 .bg-zinc-800,
+html:not(.dark) div.group.relative.bg-zinc-900\/60 .bg-zinc-800 {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: #1e293b !important;
+}
+
+/* Side Card ("Repair made simple") in Light Mode */
+html.light .bg-gradient-to-br[class*="from-zinc-800"],
+html:not(.dark) .bg-gradient-to-br[class*="from-zinc-800"] {
+  background-image: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%) !important;
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.06) !important;
+  color: #09090b !important;
+}
+
+html.light .bg-gradient-to-br[class*="from-zinc-800"] h3,
+html:not(.dark) .bg-gradient-to-br[class*="from-zinc-800"] h3 {
+  color: #09090b !important;
+}
+
+html.light .bg-gradient-to-br[class*="from-zinc-800"] p,
+html:not(.dark) .bg-gradient-to-br[class*="from-zinc-800"] p {
+  color: #475569 !important;
+}
+
+html.light .bg-gradient-to-br[class*="from-zinc-800"] span,
+html:not(.dark) .bg-gradient-to-br[class*="from-zinc-800"] span {
+  background-color: #e2e8f0 !important;
+  color: #09090b !important;
+  border-color: #cbd5e1 !important;
+}
+
+html.light .bg-gradient-to-br[class*="from-zinc-800"] a.bg-white,
+html:not(.dark) .bg-gradient-to-br[class*="from-zinc-800"] a.bg-white {
+  background-color: #09090b !important;
+  color: #ffffff !important;
+}
+
+html.light .bg-gradient-to-br[class*="from-zinc-800"] a.bg-zinc-900,
+html:not(.dark) .bg-gradient-to-br[class*="from-zinc-800"] a.bg-zinc-900 {
+  background-color: #ffffff !important;
+  color: #09090b !important;
+  border-color: #cbd5e1 !important;
+}
+
+/* Inputs, Selects, Forms in Light Mode */
+html.light input,
+html:not(.dark) input,
+html.light select,
+html:not(.dark) select,
+html.light textarea,
+html:not(.dark) textarea {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #09090b !important;
+}
+
+/* Cart Drawer in Light Mode */
+html.light .w-screen.max-w-md,
+html:not(.dark) .w-screen.max-w-md {
+  background-color: #ffffff !important;
+  border-left-color: #e2e8f0 !important;
+  color: #09090b !important;
+}
+
+html.light .w-screen.max-w-md .bg-zinc-950,
+html:not(.dark) .w-screen.max-w-md .bg-zinc-950,
+html.light .w-screen.max-w-md .bg-zinc-950\/80,
+html:not(.dark) .w-screen.max-w-md .bg-zinc-950\/80 {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light .w-screen.max-w-md .border-zinc-800,
+html:not(.dark) .w-screen.max-w-md .border-zinc-800 {
+  border-color: #e2e8f0 !important;
+}
+
+html.light .w-screen.max-w-md .text-white,
+html:not(.dark) .w-screen.max-w-md .text-white {
+  color: #09090b !important;
+}
+
+html.light .w-screen.max-w-md .text-zinc-400,
+html:not(.dark) .w-screen.max-w-md .text-zinc-400 {
+  color: #64748b !important;
 }
 
 /* Custom interactive animation keyframes */
@@ -69,11 +537,26 @@
   background: #09090b;
 }
 
+html.light ::-webkit-scrollbar-track,
+html:not(.dark) ::-webkit-scrollbar-track {
+  background: #f8fafc;
+}
+
 ::-webkit-scrollbar-thumb {
   background: #27272a;
   border-radius: 4px;
 }
 
+html.light ::-webkit-scrollbar-thumb,
+html:not(.dark) ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+
 ::-webkit-scrollbar-thumb:hover {
   background: #52525b;
+}
+
+html.light ::-webkit-scrollbar-thumb:hover,
+html:not(.dark) ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
