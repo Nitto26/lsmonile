@@ -560,3 +560,87 @@ html.light ::-webkit-scrollbar-thumb:hover,
 html:not(.dark) ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
 }
+
+/* ==========================================================================
+   Mobile Responsive Navigation & Bottom Task Bar (Media Queries)
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+  main {
+    padding-bottom: 96px !important;
+  }
+
+  .mobile-topbar {
+    height: 64px !important;
+  }
+
+  /* Ensure task bar stays permanently fixed and visible during scroll */
+  .mobile-taskbar {
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 50 !important;
+    transform: translate3d(0, 0, 0) !important;
+    -webkit-transform: translate3d(0, 0, 0) !important;
+    backface-visibility: hidden !important;
+    -webkit-backface-visibility: hidden !important;
+    will-change: transform !important;
+    background-color: rgba(9, 9, 11, 0.94) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.6) !important;
+  }
+
+  .mobile-taskbar .taskbar-item {
+    color: #a1a1aa !important;
+  }
+
+  .mobile-taskbar .taskbar-item:hover,
+  .mobile-taskbar .taskbar-item.active {
+    color: #ffffff !important;
+  }
+
+  .mobile-taskbar .active-dot {
+    background-color: #ffffff !important;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.8) !important;
+  }
+
+  .mobile-taskbar .taskbar-badge {
+    background-color: #ffffff !important;
+    color: #09090b !important;
+    border: 2px solid #09090b !important;
+  }
+
+  html.light .mobile-taskbar {
+    background-color: rgba(255, 255, 255, 0.94) !important;
+    border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.06) !important;
+  }
+
+  html.light .mobile-taskbar .taskbar-item {
+    color: #64748b !important;
+  }
+
+  html.light .mobile-taskbar .taskbar-item:hover,
+  html.light .mobile-taskbar .taskbar-item.active {
+    color: #09090b !important;
+  }
+
+  html.light .mobile-taskbar .active-dot {
+    background-color: #09090b !important;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  html.light .mobile-taskbar .taskbar-badge {
+    background-color: #09090b !important;
+    color: #ffffff !important;
+    border: 2px solid #ffffff !important;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .mobile-taskbar {
+    display: none !important;
+  }
+}

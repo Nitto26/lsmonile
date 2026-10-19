@@ -164,7 +164,7 @@ export function HomeHero() {
       )}
 
       {/* Hero Content Overlay centered within max-w-7xl */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20 flex items-center min-h-[calc(100vh-72px)] pointer-events-none">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-8 lg:px-8 py-12 lg:py-20 flex items-center min-h-[calc(100vh-72px)] pointer-events-none">
         <div className="max-w-2xl space-y-6 pointer-events-auto">
           {isDark ? (
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.08] drop-shadow-md">

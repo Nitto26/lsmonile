@@ -149,7 +149,7 @@ function ShopContent() {
     minRating !== null;
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6 text-zinc-950 dark:text-white">
+    <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-8 py-6 space-y-6 text-zinc-950 dark:text-white">
       {/* Breadcrumb */}
       <nav className="flex items-center text-xs text-zinc-500 gap-1.5">
         <Link href="/" className="hover:text-white">Home</Link>

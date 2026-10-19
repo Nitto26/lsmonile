@@ -4,16 +4,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import {
+  Home,
+  Smartphone,
+  Wrench,
   Search,
   ShoppingCart,
   Heart,
   User,
-  Menu,
   X,
   ChevronRight,
   ShieldCheck,
   Sparkles,
-  Database,
 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { Product } from '@/types';
@@ -25,15 +26,16 @@ export function Header() {
   const router = useRouter();
   const { totalItems, wishlist, setIsCartOpen } = useCart();
 
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMobileSearchOpen, setIsMobileSearchOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
   const [isUserModalOpen, setIsUserModalOpen] = useState(false);
   const [liveServices, setLiveServices] = useState<any[]>([]);
   const [isDark, setIsDark] = useState(true);
 
   const searchRef = useRef<HTMLDivElement>(null);
+  const mobileSearchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const updateTheme = () => {
@@ -60,13 +62,20 @@ export function Header() {
       .catch(() => {});
   }, []);
 
+  useEffect(() => {
+    if (isMobileSearchOpen) {
+      setTimeout(() => {
+        mobileSearchInputRef.current?.focus();
+      }, 100);
+    }
+  }, [isMobileSearchOpen]);
+
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Shop', href: '/shop' },
     { name: 'Repair', href: '/repair' },
     { name: 'About Us', href: '/about' },
     { name: 'Contact', href: '/contact' },
-    { name: 'Admin', href: '/admin' },
   ];
 
   const searchResults = React.useMemo(() => {
@@ -97,12 +106,14 @@ export function Header() {
     e.preventDefault();
     if (searchQuery.trim()) {
       setIsSearchOpen(false);
+      setIsMobileSearchOpen(false);
       router.push(`/shop?q=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
 
   return (
     <>
+      {/* Top Header */}
       <header className="sticky top-0 z-40 w-full border-none shadow-none">
         <GlassSurface
           width="100%"
@@ -120,25 +131,25 @@ export function Header() {
             boxShadow: 'none',
           }}
         >
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-            <div className="flex items-center justify-between h-20 gap-4">
-              {/* Brand Logo */}
+          <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-8 w-full">
+            <div className="flex items-center justify-between h-16 md:h-20 gap-4 mobile-topbar">
+              {/* Brand Logo & Name (Top Bar in all views) */}
               <Link href="/" className="flex flex-col group flex-shrink-0">
                 <div className="flex items-center gap-1.5">
-                  <span className="text-2xl font-black tracking-tight text-white transition-transform group-hover:scale-105">
+                  <span className="text-xl md:text-2xl font-black tracking-tight text-white transition-transform group-hover:scale-105">
                     LS
                   </span>
-                  <span className="text-2xl font-extrabold tracking-tight text-zinc-300">
+                  <span className="text-xl md:text-2xl font-extrabold tracking-tight text-zinc-300">
                     MOBILES
                   </span>
                 </div>
-                <span className="text-[9px] font-semibold tracking-[0.24em] text-zinc-400 uppercase">
+                <span className="text-[8px] md:text-[9px] font-semibold tracking-[0.22em] text-zinc-400 uppercase">
                   Care. Connect. Complete.
                 </span>
               </Link>
 
               {/* Desktop Navigation Links */}
-              <nav className="hidden lg:flex items-center space-x-1 xl:space-x-2">
+              <nav className="hidden md:flex items-center space-x-1 xl:space-x-2">
                 {navLinks.map((link) => {
                   const isActive =
                     link.href === '/'
@@ -163,7 +174,7 @@ export function Header() {
                 })}
               </nav>
 
-              {/* Pill Search Bar with Glassmorphism */}
+              {/* Desktop Search Bar */}
               <div ref={searchRef} className="relative flex-1 max-w-md hidden md:block">
                 <form onSubmit={handleSearchSubmit} className="relative">
                   <div className="relative flex items-center">
@@ -183,7 +194,7 @@ export function Header() {
                       <button
                         type="button"
                         onClick={() => setSearchQuery('')}
-                        className="absolute right-3.5 text-zinc-400 hover:text-white text-xs bg-zinc-800 rounded-full w-4 h-4 flex items-center justify-center"
+                        className="absolute right-3.5 text-zinc-400 hover:text-white text-xs bg-zinc-800 rounded-full w-4 h-4 flex items-center justify-center cursor-pointer"
                       >
                         ×
                       </button>
@@ -258,7 +269,7 @@ export function Header() {
                     <div className="p-2.5 bg-zinc-950 border-t border-zinc-800 text-center">
                       <button
                         onClick={handleSearchSubmit}
-                        className="text-xs font-semibold text-zinc-300 hover:text-white hover:underline"
+                        className="text-xs font-semibold text-zinc-300 hover:text-white hover:underline cursor-pointer"
                       >
                         View all results for &quot;{searchQuery}&quot; →
                       </button>
@@ -267,9 +278,8 @@ export function Header() {
                 )}
               </div>
 
-              {/* Right Action Icons matching Monochromatic Theme */}
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                {/* Theme Toggler with View Transition Animation */}
+              {/* Desktop Right Action Icons */}
+              <div className="hidden md:flex items-center gap-1.5 sm:gap-2">
                 <AnimatedThemeToggler
                   className="relative p-2.5 text-zinc-300 hover:text-white bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700/80 backdrop-blur-md rounded-full shadow-2xs hover:shadow-xs transition-all cursor-pointer flex items-center justify-center"
                   variant="circle"
@@ -278,7 +288,6 @@ export function Header() {
                   aria-label="Toggle light or dark theme"
                 />
 
-                {/* Wishlist Link */}
                 <Link
                   href="/shop?filter=wishlist"
                   className="relative p-2.5 text-zinc-300 hover:text-white bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700/80 backdrop-blur-md rounded-full shadow-2xs hover:shadow-xs transition-all"
@@ -290,7 +299,6 @@ export function Header() {
                   )}
                 </Link>
 
-                {/* Shopping Cart Button */}
                 <button
                   type="button"
                   onClick={() => setIsCartOpen(true)}
@@ -306,7 +314,6 @@ export function Header() {
                   )}
                 </button>
 
-                {/* User Profile Icon */}
                 <button
                   type="button"
                   onClick={() => setIsUserModalOpen(true)}
@@ -316,86 +323,285 @@ export function Header() {
                 >
                   <User className="w-5 h-5" />
                 </button>
-
-                {/* Mobile menu toggle */}
-                <button
-                  type="button"
-                  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="lg:hidden p-2.5 text-zinc-300 hover:text-white bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700/80 backdrop-blur-md rounded-xl transition-all ml-1 cursor-pointer"
-                  aria-label="Toggle navigation menu"
-                >
-                  {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-                </button>
               </div>
-            </div>
 
-            {/* Mobile Search Bar with Glassmorphism */}
-            <div className="md:hidden pb-3">
-              <form onSubmit={handleSearchSubmit} className="relative">
-                <Search className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400 pointer-events-none" />
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search products, services, parts..."
-                  className="w-full pl-9 pr-4 py-2 bg-zinc-900/80 backdrop-blur-md text-sm text-white placeholder:text-zinc-500 rounded-full border border-zinc-700 focus:outline-none focus:border-white shadow-inner"
+              {/* Mobile Right: ONLY Theme Toggle Icon */}
+              <div className="flex md:hidden items-center">
+                <AnimatedThemeToggler
+                  className="relative p-2.5 text-zinc-300 hover:text-white bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700/80 backdrop-blur-md rounded-full shadow-2xs transition-all cursor-pointer flex items-center justify-center"
+                  variant="circle"
+                  duration={450}
+                  title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+                  aria-label="Toggle light or dark theme"
                 />
-              </form>
+              </div>
             </div>
           </div>
-
-          {/* Mobile Navigation Drawer with Glassmorphism */}
-          {isMobileMenuOpen && (
-            <div className="lg:hidden border-t border-zinc-800 bg-zinc-900/95 backdrop-blur-2xl px-4 pt-3 pb-6 shadow-2xl animate-in fade-in duration-150">
-              <nav className="flex flex-col space-y-1">
-                {navLinks.map((link) => {
-                  const isActive =
-                    link.href === '/'
-                      ? pathname === '/'
-                      : pathname.startsWith(link.href);
-                  return (
-                    <Link
-                      key={link.name}
-                      href={link.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={`flex items-center justify-between px-4 py-3 rounded-xl text-base font-semibold transition-all ${
-                        isActive
-                          ? 'bg-zinc-800 text-white font-bold border border-zinc-700'
-                          : 'text-zinc-300 hover:bg-zinc-800/60'
-                      }`}
-                    >
-                      <span>{link.name}</span>
-                      <ChevronRight className="w-4 h-4 text-zinc-500" />
-                    </Link>
-                  );
-                })}
-              </nav>
-
-              <div className="mt-4 pt-4 border-t border-zinc-800 flex items-center justify-between px-2">
-                <div className="flex items-center gap-2 text-xs text-zinc-400">
-                  <ShieldCheck className="w-4 h-4 text-white" />
-                  <span>Certified LS Technicians</span>
-                </div>
-                <Link
-                  href="/repair"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-xs font-bold text-zinc-950 bg-white hover:bg-zinc-200 border border-white px-3 py-1.5 rounded-full shadow-2xs"
-                >
-                  Book Repair
-                </Link>
-              </div>
-            </div>
-          )}
         </GlassSurface>
       </header>
 
-      {/* Demo User Account Modal with Glassmorphism */}
+      {/* Mobile Bottom Task Bar (Fixed Dock for all other navigation items) */}
+      <nav
+        aria-label="Mobile Bottom Navigation"
+        className="mobile-taskbar fixed bottom-0 left-0 right-0 z-50 md:hidden"
+        style={{
+          paddingBottom: 'max(env(safe-area-inset-bottom, 8px), 8px)',
+        }}
+      >
+        <div className="grid grid-cols-6 h-16 items-center px-3 sm:px-4 max-w-lg mx-auto">
+          {/* 1. Home */}
+          <Link
+            href="/"
+            className={`taskbar-item flex flex-col items-center justify-center py-1 transition-all ${
+              pathname === '/' ? 'active' : ''
+            }`}
+          >
+            <div className="relative flex items-center justify-center">
+              <Home className="w-5 h-5" />
+              {pathname === '/' && (
+                <span className="active-dot absolute -bottom-1.5 w-1 h-1 rounded-full" />
+              )}
+            </div>
+            <span className="text-[10px] font-medium tracking-tight mt-1">Home</span>
+          </Link>
+
+          {/* 2. Shop */}
+          <Link
+            href="/shop"
+            className={`taskbar-item flex flex-col items-center justify-center py-1 transition-all ${
+              pathname.startsWith('/shop') && !pathname.includes('wishlist') ? 'active' : ''
+            }`}
+          >
+            <div className="relative flex items-center justify-center">
+              <Smartphone className="w-5 h-5" />
+              {pathname.startsWith('/shop') && !pathname.includes('wishlist') && (
+                <span className="active-dot absolute -bottom-1.5 w-1 h-1 rounded-full" />
+              )}
+            </div>
+            <span className="text-[10px] font-medium tracking-tight mt-1">Shop</span>
+          </Link>
+
+          {/* 3. Repair */}
+          <Link
+            href="/repair"
+            className={`taskbar-item flex flex-col items-center justify-center py-1 transition-all ${
+              pathname.startsWith('/repair') ? 'active' : ''
+            }`}
+          >
+            <div className="relative flex items-center justify-center">
+              <Wrench className="w-5 h-5" />
+              {pathname.startsWith('/repair') && (
+                <span className="active-dot absolute -bottom-1.5 w-1 h-1 rounded-full" />
+              )}
+            </div>
+            <span className="text-[10px] font-medium tracking-tight mt-1">Repair</span>
+          </Link>
+
+          {/* 4. Search */}
+          <button
+            type="button"
+            onClick={() => setIsMobileSearchOpen(true)}
+            className={`taskbar-item flex flex-col items-center justify-center py-1 transition-all cursor-pointer ${
+              isMobileSearchOpen ? 'active' : ''
+            }`}
+            aria-label="Search store"
+          >
+            <div className="relative flex items-center justify-center">
+              <Search className="w-5 h-5" />
+            </div>
+            <span className="text-[10px] font-medium tracking-tight mt-1">Search</span>
+          </button>
+
+          {/* 5. Wishlist */}
+          <Link
+            href="/shop?filter=wishlist"
+            className={`taskbar-item flex flex-col items-center justify-center py-1 transition-all relative ${
+              pathname.includes('wishlist') ? 'active' : ''
+            }`}
+          >
+            <div className="relative flex items-center justify-center">
+              <Heart className="w-5 h-5" />
+              {mounted && wishlist.length > 0 && (
+                <span className="absolute -top-1 -right-1 w-2 h-2 bg-rose-500 rounded-full ring-2 ring-zinc-950" />
+              )}
+              {pathname.includes('wishlist') && (
+                <span className="active-dot absolute -bottom-1.5 w-1 h-1 rounded-full" />
+              )}
+            </div>
+            <span className="text-[10px] font-medium tracking-tight mt-1">Wishlist</span>
+          </Link>
+
+          {/* 6. Cart */}
+          <button
+            type="button"
+            onClick={() => setIsCartOpen(true)}
+            className="taskbar-item flex flex-col items-center justify-center py-1 transition-all relative cursor-pointer"
+            aria-label="View shopping cart"
+          >
+            <div className="relative flex items-center justify-center">
+              <ShoppingCart className="w-5 h-5" />
+              {mounted && totalItems > 0 && (
+                <span className="taskbar-badge absolute -top-1.5 -right-2.5 font-black text-[10px] w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
+                  {totalItems}
+                </span>
+              )}
+            </div>
+            <span className="text-[10px] font-medium tracking-tight mt-1">Cart</span>
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Search Modal / Overlay */}
+      {isMobileSearchOpen && (
+        <div className="fixed inset-0 z-50 flex flex-col bg-black/85 backdrop-blur-md animate-in fade-in duration-150 md:hidden">
+          <div className="p-4 bg-zinc-900 border-b border-zinc-800 shadow-2xl">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-bold uppercase tracking-wider text-zinc-400">Search LS Mobiles</span>
+              <button
+                type="button"
+                onClick={() => setIsMobileSearchOpen(false)}
+                className="p-1.5 text-zinc-400 hover:text-white rounded-full bg-zinc-800 hover:bg-zinc-700 cursor-pointer"
+                aria-label="Close search"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSearchSubmit} className="relative">
+              <Search className="absolute left-3.5 top-3 w-4 h-4 text-zinc-400 pointer-events-none" />
+              <input
+                ref={mobileSearchInputRef}
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search phones, repairs, accessories..."
+                className="w-full pl-9 pr-9 py-2.5 bg-zinc-950 text-white placeholder:text-zinc-500 rounded-xl border border-zinc-700 focus:outline-none focus:border-white text-sm"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-2.5 text-zinc-400 hover:text-white text-xs bg-zinc-800 rounded-full w-5 h-5 flex items-center justify-center cursor-pointer"
+                >
+                  ×
+                </button>
+              )}
+            </form>
+          </div>
+
+          {/* Results or Quick Links in Mobile Search */}
+          <div className="flex-1 overflow-y-auto p-4 space-y-4">
+            {searchResults && (searchResults.products.length > 0 || searchResults.repairs.length > 0) ? (
+              <div className="space-y-4">
+                {searchResults.products.length > 0 && (
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">
+                      Products ({searchResults.products.length})
+                    </p>
+                    <div className="space-y-1.5">
+                      {searchResults.products.map((product) => (
+                        <Link
+                          key={product.id}
+                          href={`/product/${product.id}`}
+                          onClick={() => {
+                            setIsMobileSearchOpen(false);
+                            setSearchQuery('');
+                          }}
+                          className="flex items-center justify-between p-3 rounded-xl bg-zinc-900 border border-zinc-800"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 bg-zinc-950 rounded-lg flex items-center justify-center p-1 border border-zinc-800">
+                              <img src={product.image} alt={product.name} className="w-8 h-8 object-contain" />
+                            </div>
+                            <div>
+                              <h4 className="text-sm font-semibold text-white line-clamp-1">{product.name}</h4>
+                              <span className="text-xs text-zinc-400">{product.brand} · ₹{product.price.toLocaleString('en-IN')}</span>
+                            </div>
+                          </div>
+                          <ChevronRight className="w-4 h-4 text-zinc-500" />
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {searchResults.repairs.length > 0 && (
+                  <div>
+                    <p className="text-xs font-bold uppercase tracking-wider text-zinc-400 mb-2">
+                      Repair Services
+                    </p>
+                    <div className="space-y-1.5">
+                      {searchResults.repairs.map((repair) => (
+                        <Link
+                          key={repair.id}
+                          href={`/repair?service=${repair.id}`}
+                          onClick={() => {
+                            setIsMobileSearchOpen(false);
+                            setSearchQuery('');
+                          }}
+                          className="flex items-center justify-between p-3 rounded-xl bg-zinc-900 border border-zinc-800"
+                        >
+                          <div>
+                            <p className="text-sm font-semibold text-white">{repair.title}</p>
+                            <p className="text-xs text-zinc-400">From ₹{repair.priceFrom.toLocaleString('en-IN')} · {repair.turnaroundTime}</p>
+                          </div>
+                          <ChevronRight className="w-4 h-4 text-zinc-500" />
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  onClick={handleSearchSubmit}
+                  className="w-full py-2.5 bg-white text-zinc-950 font-bold text-xs rounded-xl text-center shadow-sm cursor-pointer"
+                >
+                  View all results for &quot;{searchQuery}&quot;
+                </button>
+              </div>
+            ) : (
+              <div className="space-y-4 pt-2">
+                <p className="text-xs font-bold uppercase tracking-wider text-zinc-500">Quick Navigation</p>
+                <div className="grid grid-cols-2 gap-2">
+                  <Link
+                    href="/about"
+                    onClick={() => setIsMobileSearchOpen(false)}
+                    className="p-3 bg-zinc-900 hover:bg-zinc-800 rounded-xl text-sm font-semibold text-white border border-zinc-800 text-center"
+                  >
+                    About Us
+                  </Link>
+                  <Link
+                    href="/contact"
+                    onClick={() => setIsMobileSearchOpen(false)}
+                    className="p-3 bg-zinc-900 hover:bg-zinc-800 rounded-xl text-sm font-semibold text-white border border-zinc-800 text-center"
+                  >
+                    Contact
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setIsMobileSearchOpen(false);
+                      setIsUserModalOpen(true);
+                    }}
+                    className="col-span-2 p-3 bg-zinc-900 hover:bg-zinc-800 rounded-xl text-sm font-semibold text-white border border-zinc-800 text-center cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <User className="w-4 h-4 text-zinc-400" /> Demo Account & Repairs
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Demo User Account Modal */}
       {isUserModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md animate-in fade-in">
           <div className="bg-zinc-900/95 backdrop-blur-2xl rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-zinc-700 relative text-white">
             <button
               onClick={() => setIsUserModalOpen(false)}
-              className="absolute top-4 right-4 p-2 text-zinc-400 hover:text-white rounded-full hover:bg-zinc-800"
+              className="absolute top-4 right-4 p-2 text-zinc-400 hover:text-white rounded-full hover:bg-zinc-800 cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -428,13 +634,6 @@ export function Header() {
             </div>
 
             <div className="flex flex-col gap-2">
-              <Link
-                href="/admin"
-                onClick={() => setIsUserModalOpen(false)}
-                className="w-full py-2.5 px-3 bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-bold rounded-xl text-center transition-colors flex items-center justify-center gap-1.5 border border-zinc-700"
-              >
-                <Database className="w-3.5 h-3.5" /> SQLite Admin Dashboard
-              </Link>
               <div className="flex gap-2">
                 <Link
                   href="/repair?track=LS-REP-8492"
@@ -445,7 +644,7 @@ export function Header() {
                 </Link>
                 <button
                   onClick={() => setIsUserModalOpen(false)}
-                  className="flex-1 py-2 px-3 bg-white hover:bg-zinc-200 text-zinc-950 text-xs font-black rounded-xl text-center transition-colors shadow-sm"
+                  className="flex-1 py-2 px-3 bg-white hover:bg-zinc-200 text-zinc-950 text-xs font-black rounded-xl text-center transition-colors shadow-sm cursor-pointer"
                 >
                   Close
                 </button>
@@ -457,4 +656,5 @@ export function Header() {
     </>
   );
 }
+
 export default Header;

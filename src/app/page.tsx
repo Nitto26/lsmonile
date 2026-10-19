@@ -41,7 +41,7 @@ export default async function HomePage() {
       <HomeHero />
 
       {/* Main Content Area */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-16">
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-8 py-10 space-y-16">
         {/* 2. Shop by Category */}
         <section className="space-y-4">
           <div className="flex items-center justify-between">

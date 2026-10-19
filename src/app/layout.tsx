@@ -45,7 +45,7 @@ export default function RootLayout({
           <Suspense fallback={<div className="h-20" />}>
             <Header />
           </Suspense>
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 pb-24 md:pb-0">{children}</main>
           <CartDrawer />
           <ToastContainer />
         </CartProvider>
