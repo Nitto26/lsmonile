@@ -10,13 +10,6 @@ interface PageProps {
   params: Promise<{ id: string }>;
 }
 
-export function generateStaticParams() {
-  const products = getAllProducts();
-  return products.map((product) => ({
-    id: product.id,
-  }));
-}
-
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { id } = await params;
   const product = getProductById(id);
