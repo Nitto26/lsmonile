@@ -40,6 +40,37 @@ export interface RepairService {
   iconName: 'screen' | 'battery' | 'water' | 'software' | 'camera' | 'other';
 }
 
+export interface OrderItem {
+  id: string;
+  orderId: string;
+  productId: string;
+  productName: string;
+  productImage?: string;
+  quantity: number;
+  price: number;
+  selectedColor?: string;
+  selectedStorage?: string;
+}
+
+export interface Order {
+  id: string;
+  orderNumber: string;
+  customerName: string;
+  customerPhone: string;
+  customerEmail?: string;
+  shippingAddress: string;
+  city?: string;
+  pincode?: string;
+  totalAmount: number;
+  paymentMethod: 'COD' | 'UPI' | 'Card';
+  paymentStatus: 'pending' | 'paid' | 'failed' | 'refunded';
+  orderStatus: 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+  notes?: string;
+  items?: OrderItem[];
+  createdAt: string;
+  updatedAt: string;
+}
+
 export interface RepairBooking {
   id: string;
   deviceType: string;

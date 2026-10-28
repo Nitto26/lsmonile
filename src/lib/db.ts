@@ -1,7 +1,7 @@
 import Database from 'better-sqlite3';
 import path from 'path';
 import fs from 'fs';
-import { Product, RepairService, RepairBooking } from '@/types';
+import { Product, RepairService, RepairBooking, Order, OrderItem } from '@/types';
 import { products as initialProducts } from '@/data/products';
 import { repairServices as initialRepairServices, initialRepairTickets } from '@/data/repairs';
 
@@ -83,6 +83,37 @@ function initDatabase(db: Database.Database) {
       statusProgress INTEGER NOT NULL,
       estimatedCost REAL NOT NULL,
       createdAt TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS orders (
+      id TEXT PRIMARY KEY,
+      orderNumber TEXT UNIQUE NOT NULL,
+      customerName TEXT NOT NULL,
+      customerPhone TEXT NOT NULL,
+      customerEmail TEXT,
+      shippingAddress TEXT NOT NULL,
+      city TEXT,
+      pincode TEXT,
+      totalAmount REAL NOT NULL,
+      paymentMethod TEXT NOT NULL DEFAULT 'COD',
+      paymentStatus TEXT NOT NULL DEFAULT 'pending',
+      orderStatus TEXT NOT NULL DEFAULT 'pending',
+      notes TEXT,
+      createdAt TEXT NOT NULL DEFAULT (datetime('now')),
+      updatedAt TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+
+    CREATE TABLE IF NOT EXISTS order_items (
+      id TEXT PRIMARY KEY,
+      orderId TEXT NOT NULL,
+      productId TEXT NOT NULL,
+      productName TEXT NOT NULL,
+      productImage TEXT,
+      quantity INTEGER NOT NULL,
+      price REAL NOT NULL,
+      selectedColor TEXT,
+      selectedStorage TEXT,
+      FOREIGN KEY (orderId) REFERENCES orders(id) ON DELETE CASCADE
     );
   `);
 
@@ -512,21 +543,141 @@ export function updateRepairBooking(id: string, updates: Partial<RepairBooking>)
   return merged;
 }
 
+// --- Order Queries ---
+export function getAllOrders(): Order[] {
+  const db = getDatabase();
+  const orders = db.prepare('SELECT * FROM orders ORDER BY createdAt DESC').all() as any[];
+  const items = db.prepare('SELECT * FROM order_items').all() as OrderItem[];
+
+  const itemsByOrder = items.reduce((acc: Record<string, OrderItem[]>, item: OrderItem) => {
+    if (!acc[item.orderId]) acc[item.orderId] = [];
+    acc[item.orderId].push(item);
+    return acc;
+  }, {});
+
+  return orders.map((o) => ({
+    ...o,
+    items: itemsByOrder[o.id] || [],
+  }));
+}
+
+export function getOrderById(id: string): Order | null {
+  const db = getDatabase();
+  const order = db.prepare('SELECT * FROM orders WHERE id = ? OR orderNumber = ?').get(id, id) as any;
+  if (!order) return null;
+
+  const items = db.prepare('SELECT * FROM order_items WHERE orderId = ?').all(order.id) as OrderItem[];
+  return {
+    ...order,
+    items,
+  };
+}
+
+export function createOrder(orderData: Omit<Order, 'id' | 'orderNumber' | 'createdAt' | 'updatedAt'> & { items: Omit<OrderItem, 'id' | 'orderId'>[] }): Order {
+  const db = getDatabase();
+  const orderId = `ORD-${Date.now().toString(36).toUpperCase()}-${Math.floor(Math.random() * 1000)}`;
+  const orderNumber = `LSM-${Math.floor(100000 + Math.random() * 900000)}`;
+
+  const insertOrder = db.prepare(`
+    INSERT INTO orders (
+      id, orderNumber, customerName, customerPhone, customerEmail,
+      shippingAddress, city, pincode, totalAmount, paymentMethod,
+      paymentStatus, orderStatus, notes, createdAt, updatedAt
+    ) VALUES (
+      @id, @orderNumber, @customerName, @customerPhone, @customerEmail,
+      @shippingAddress, @city, @pincode, @totalAmount, @paymentMethod,
+      @paymentStatus, @orderStatus, @notes, datetime('now'), datetime('now')
+    )
+  `);
+
+  const insertItem = db.prepare(`
+    INSERT INTO order_items (
+      id, orderId, productId, productName, productImage, quantity, price, selectedColor, selectedStorage
+    ) VALUES (
+      @id, @orderId, @productId, @productName, @productImage, @quantity, @price, @selectedColor, @selectedStorage
+    )
+  `);
+
+  const transaction = db.transaction(() => {
+    insertOrder.run({
+      id: orderId,
+      orderNumber,
+      customerName: orderData.customerName,
+      customerPhone: orderData.customerPhone,
+      customerEmail: orderData.customerEmail || null,
+      shippingAddress: orderData.shippingAddress,
+      city: orderData.city || null,
+      pincode: orderData.pincode || null,
+      totalAmount: orderData.totalAmount,
+      paymentMethod: orderData.paymentMethod || 'COD',
+      paymentStatus: orderData.paymentStatus || 'pending',
+      orderStatus: orderData.orderStatus || 'pending',
+      notes: orderData.notes || null,
+    });
+
+    for (const item of orderData.items) {
+      const itemId = `ITEM-${Date.now().toString(36)}-${Math.floor(Math.random() * 10000)}`;
+      insertItem.run({
+        id: itemId,
+        orderId,
+        productId: item.productId,
+        productName: item.productName,
+        productImage: item.productImage || null,
+        quantity: item.quantity,
+        price: item.price,
+        selectedColor: item.selectedColor || null,
+        selectedStorage: item.selectedStorage || null,
+      });
+    }
+  });
+
+  transaction();
+  return getOrderById(orderId)!;
+}
+
+export function updateOrderStatus(id: string, orderStatus: string, paymentStatus?: string): Order | null {
+  const db = getDatabase();
+  const current = getOrderById(id);
+  if (!current) return null;
+
+  const newPaymentStatus = paymentStatus || current.paymentStatus;
+  db.prepare(`
+    UPDATE orders SET
+      orderStatus = @orderStatus,
+      paymentStatus = @paymentStatus,
+      updatedAt = datetime('now')
+    WHERE id = @id
+  `).run({
+    id: current.id,
+    orderStatus,
+    paymentStatus: newPaymentStatus,
+  });
+
+  return getOrderById(current.id);
+}
+
 // --- Dashboard Statistics Query ---
 export function getDashboardStats() {
   const db = getDatabase();
   const productStats = db.prepare(`SELECT count(*) as totalProducts, sum(price) as catalogValue, sum(CASE WHEN inStock = 0 THEN 1 ELSE 0 END) as outOfStock FROM products`).get() as any;
   const bookingStats = db.prepare(`SELECT count(*) as totalBookings, sum(CASE WHEN status != 'Ready' THEN 1 ELSE 0 END) as activeBookings, sum(CASE WHEN status = 'Ready' THEN 1 ELSE 0 END) as completedBookings, sum(estimatedCost) as totalRevenue FROM repair_bookings`).get() as any;
+  const orderStats = db.prepare(`SELECT count(*) as totalOrders, sum(totalAmount) as totalOrderRevenue, sum(CASE WHEN orderStatus = 'pending' THEN 1 ELSE 0 END) as pendingOrders FROM orders`).get() as any;
   const recentBookings = db.prepare(`SELECT * FROM repair_bookings ORDER BY createdAt DESC LIMIT 5`).all();
+  const recentOrders = db.prepare(`SELECT * FROM orders ORDER BY createdAt DESC LIMIT 5`).all();
 
   return {
-    totalProducts: productStats.totalProducts || 0,
-    catalogValue: Math.round(productStats.catalogValue || 0),
-    outOfStock: productStats.outOfStock || 0,
-    totalBookings: bookingStats.totalBookings || 0,
-    activeBookings: bookingStats.activeBookings || 0,
-    completedBookings: bookingStats.completedBookings || 0,
-    totalRevenue: Math.round(bookingStats.totalRevenue || 0),
+    totalProducts: productStats?.totalProducts || 0,
+    catalogValue: Math.round(productStats?.catalogValue || 0),
+    outOfStock: productStats?.outOfStock || 0,
+    totalBookings: bookingStats?.totalBookings || 0,
+    activeBookings: bookingStats?.activeBookings || 0,
+    completedBookings: bookingStats?.completedBookings || 0,
+    totalRevenue: Math.round(bookingStats?.totalRevenue || 0),
+    totalOrders: orderStats?.totalOrders || 0,
+    totalOrderRevenue: Math.round(orderStats?.totalOrderRevenue || 0),
+    pendingOrders: orderStats?.pendingOrders || 0,
     recentBookings,
+    recentOrders,
   };
 }
+

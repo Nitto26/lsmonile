@@ -49,20 +49,54 @@ export function CartDrawer() {
     }
   };
 
-  const handleDemoCheckout = () => {
-    const generatedOrderId = `LS-ORD-${Math.floor(100000 + Math.random() * 900000)}`;
-    setOrderCompleteData({
-      orderId: generatedOrderId,
-      total: finalTotal,
-    });
+  const handleDemoCheckout = async () => {
     try {
+      const orderPayload = {
+        customerName: 'Demo Customer',
+        customerPhone: '+91 98765 43210',
+        customerEmail: 'customer@example.com',
+        shippingAddress: 'LS Mobile Customer Address, Store Pickup / Delivery',
+        totalAmount: finalTotal,
+        paymentMethod: 'COD',
+        paymentStatus: 'pending',
+        orderStatus: 'pending',
+        notes: appliedDiscount ? `Applied Coupon: ${appliedDiscount.code}` : undefined,
+        items: cart.map((item) => ({
+          productId: item.productId,
+          productName: item.product.name,
+          productImage: item.product.image,
+          quantity: item.quantity,
+          price: item.product.price,
+          selectedColor: item.selectedColor,
+          selectedStorage: item.selectedStorage,
+        })),
+      };
+
+      const res = await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(orderPayload),
+      });
+
+      const data = await res.json();
+      const generatedOrderId = data?.data?.orderNumber || `LS-ORD-${Math.floor(100000 + Math.random() * 900000)}`;
+
+      setOrderCompleteData({
+        orderId: generatedOrderId,
+        total: finalTotal,
+      });
+
       confetti({
         particleCount: 80,
         spread: 70,
         origin: { y: 0.6 },
       });
     } catch {
-      // fallback
+      const generatedOrderId = `LS-ORD-${Math.floor(100000 + Math.random() * 900000)}`;
+      setOrderCompleteData({
+        orderId: generatedOrderId,
+        total: finalTotal,
+      });
     }
   };
 

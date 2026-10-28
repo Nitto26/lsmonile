@@ -111,6 +111,10 @@ export function Header() {
     }
   };
 
+  if (pathname?.startsWith('/admin')) {
+    return null;
+  }
+
   return (
     <>
       {/* Top Header */}
