@@ -199,6 +199,7 @@ export function Header() {
                         type="button"
                         onClick={() => setSearchQuery('')}
                         className="absolute right-3.5 text-zinc-400 hover:text-white text-xs bg-zinc-800 rounded-full w-4 h-4 flex items-center justify-center cursor-pointer"
+                        aria-label="Clear search"
                       >
                         ×
                       </button>
@@ -296,6 +297,7 @@ export function Header() {
                   href="/shop?filter=wishlist"
                   className="relative p-2.5 text-zinc-300 hover:text-white bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700/80 backdrop-blur-md rounded-full shadow-2xs hover:shadow-xs transition-all"
                   title="Wishlist"
+                  aria-label="Wishlist"
                 >
                   <Heart className="w-5 h-5" />
                   {mounted && wishlist.length > 0 && (
@@ -422,6 +424,7 @@ export function Header() {
             className={`taskbar-item flex flex-col items-center justify-center py-1 transition-all relative ${
               pathname.includes('wishlist') ? 'active' : ''
             }`}
+            aria-label="Wishlist"
           >
             <div className="relative flex items-center justify-center">
               <Heart className="w-5 h-5" />
@@ -486,6 +489,7 @@ export function Header() {
                   type="button"
                   onClick={() => setSearchQuery('')}
                   className="absolute right-3 top-2.5 text-zinc-400 hover:text-white text-xs bg-zinc-800 rounded-full w-5 h-5 flex items-center justify-center cursor-pointer"
+                  aria-label="Clear search"
                 >
                   ×
                 </button>
@@ -606,6 +610,7 @@ export function Header() {
             <button
               onClick={() => setIsUserModalOpen(false)}
               className="absolute top-4 right-4 p-2 text-zinc-400 hover:text-white rounded-full hover:bg-zinc-800 cursor-pointer"
+              aria-label="Close user modal"
             >
               <X className="w-5 h-5" />
             </button>

@@ -83,7 +83,7 @@ const DriftWall = ({
     const unit = tileHeight + gap;
     return columnItems.map(col => {
       const copyHeight = Math.max(unit, col.length * unit);
-      const copies = Math.max(2, Math.ceil((containerHeight * 1.6) / copyHeight) + 1);
+      const copies = Math.max(2, Math.ceil((containerHeight * 1.3) / copyHeight) + 1);
       return { copyHeight, copies };
     });
   }, [columnItems, tileHeight, gap, containerHeight]);
@@ -231,7 +231,16 @@ const DriftWall = ({
   const renderTile = (item, id, colIndex) => {
     const inner = (
       <span className="drift-wall__inner">
-        <img src={item.image} alt={item.title ?? ''} loading="lazy" decoding="async" draggable={false} />
+        <img
+          src={item.image}
+          alt={item.title ?? ''}
+          loading="lazy"
+          decoding="async"
+          fetchPriority="low"
+          width={tileWidth}
+          height={tileHeight}
+          draggable={false}
+        />
         <span className="drift-wall__overlay" aria-hidden="true" />
         {item.title && (
           <span className="drift-wall__badge">
@@ -249,13 +258,13 @@ const DriftWall = ({
     };
     if (item.href) {
       return (
-        <a key={id} href={item.href} {...commonProps}>
+        <a key={id} href={item.href} {...commonProps} tabIndex={-1}>
           {inner}
         </a>
       );
     }
     return (
-      <div key={id} tabIndex={0} role="button" aria-label={item.title ?? 'tile'} {...commonProps}>
+      <div key={id} tabIndex={-1} role="presentation" aria-hidden="true" {...commonProps}>
         {inner}
       </div>
     );

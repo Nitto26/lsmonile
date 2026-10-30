@@ -7,92 +7,92 @@ import DriftWall from './DriftWall';
 
 const HERO_WALL_ITEMS = [
   {
-    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?w=360&auto=format&fit=crop&q=70',
     title: 'Screen Replacement',
     href: '/repair?service=screen-replacement'
   },
   {
-    image: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=360&auto=format&fit=crop&q=70',
     title: 'iPhone 15 Pro Titanium',
     href: '/product/iphone-15'
   },
   {
-    image: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1629654297299-c8506221ca97?w=360&auto=format&fit=crop&q=70',
     title: 'Level-4 Micro-Soldering',
     href: '/repair?service=water-damage'
   },
   {
-    image: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=360&auto=format&fit=crop&q=70',
     title: 'Samsung Galaxy S24 Ultra',
     href: '/product/samsung-galaxy-s24'
   },
   {
-    image: 'https://images.unsplash.com/photo-1597740985671-2a8a3b805327?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1597740985671-2a8a3b805327?w=360&auto=format&fit=crop&q=70',
     title: 'Genuine Battery Swap',
     href: '/repair?service=battery-replacement'
   },
   {
-    image: 'https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1565849904461-04a58ad377e0?w=360&auto=format&fit=crop&q=70',
     title: 'Flagship Triple Cameras',
     href: '/shop'
   },
   {
-    image: 'https://images.unsplash.com/photo-1588508065123-287b28e013da?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1588508065123-287b28e013da?w=360&auto=format&fit=crop&q=70',
     title: 'ESD-Safe Certified Station',
     href: '/repair'
   },
   {
-    image: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=360&auto=format&fit=crop&q=70',
     title: 'LTPO AMOLED Display',
     href: '/shop'
   },
   {
-    image: 'https://images.unsplash.com/photo-1563770660941-20978e870e26?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1563770660941-20978e870e26?w=360&auto=format&fit=crop&q=70',
     title: 'Camera & Optical Repair',
     href: '/repair?service=camera-repair'
   },
   {
-    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=360&auto=format&fit=crop&q=70',
     title: 'Flagship 5G Handsets',
     href: '/shop'
   },
   {
-    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=360&auto=format&fit=crop&q=70',
     title: 'Logic Board Diagnostics',
     href: '/repair?service=software-system-fix'
   },
   {
-    image: 'https://images.unsplash.com/photo-1533228801758-7621477835a6?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1533228801758-7621477835a6?w=360&auto=format&fit=crop&q=70',
     title: 'Curated Smartphone Series',
     href: '/shop'
   },
   {
-    image: 'https://images.unsplash.com/photo-1580910051074-3eb694886505?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1580910051074-3eb694886505?w=360&auto=format&fit=crop&q=70',
     title: 'Express 45-Min Screen Fix',
     href: '/repair?service=screen-replacement'
   },
   {
-    image: 'https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1523206489230-c012c64b2b48?w=360&auto=format&fit=crop&q=70',
     title: 'Apple & Android Lineup',
     href: '/shop'
   },
   {
-    image: 'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1584438784894-089d6a62b8fa?w=360&auto=format&fit=crop&q=70',
     title: 'OEM Precision Tooling',
     href: '/repair'
   },
   {
-    image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=360&auto=format&fit=crop&q=70',
     title: 'Microscope Hardware Bench',
     href: '/repair'
   },
   {
-    image: 'https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1574944985070-8f3ebc6b79d2?w=360&auto=format&fit=crop&q=70',
     title: 'Certified Sealed Devices',
     href: '/shop'
   },
   {
-    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&auto=format&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=360&auto=format&fit=crop&q=70',
     title: 'Complete Device Overhaul',
     href: '/repair'
   }
@@ -100,6 +100,23 @@ const HERO_WALL_ITEMS = [
 
 export function HomeHero() {
   const [isDark, setIsDark] = React.useState(true);
+  const [columns, setColumns] = React.useState(3);
+
+  React.useEffect(() => {
+    const updateColumns = () => {
+      const width = window.innerWidth;
+      if (width < 640) {
+        setColumns(3);
+      } else if (width < 1024) {
+        setColumns(4);
+      } else {
+        setColumns(6);
+      }
+    };
+    updateColumns();
+    window.addEventListener('resize', updateColumns);
+    return () => window.removeEventListener('resize', updateColumns);
+  }, []);
 
   React.useEffect(() => {
     const updateTheme = () => {
@@ -124,10 +141,10 @@ export function HomeHero() {
       }}
     >
       {/* Background DriftWall Layer with alternating scrolling columns */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-auto">
+      <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-auto" aria-hidden="true">
         <DriftWall
           items={HERO_WALL_ITEMS}
-          columns={6}
+          columns={columns}
           tileWidth={220}
           tileHeight={144}
           gap={16}

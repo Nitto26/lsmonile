@@ -71,6 +71,9 @@ export function ProductCard({ product }: ProductCardProps) {
             alt={product.name}
             className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-105 filter drop-shadow-md"
             loading="lazy"
+            decoding="async"
+            width={176}
+            height={176}
           />
         </div>
       </Link>
